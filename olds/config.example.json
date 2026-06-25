@@ -1,0 +1,43 @@
+{
+  "PRMC_CONFIG": {
+    "THAM_SO_BAT_BUOC": {
+      "TIMEFRAME": "H1",
+      "SYMBOL": "XAUUSD",
+      "PATTERN_LENGTH": 5,
+      "HISTORY_RANGE_BARS": 500
+    },
+    "THAM_SO_MATCHING": {
+      "SIMILARITY_PERCENTILE": 70,
+      "SIMILARITY_MIN_CLIP": 0.60,
+      "SIMILARITY_MAX_CLIP": 0.95
+    },
+    "THAM_SO_XAC_SUAT": {
+      "PROB_BASE_TRIGGER": 0.65,
+      "ENTROPY_MIN_DIFF": 0.20,
+      "HALFLIFE_BARS": 48
+    },
+    "THAM_SO_VON_KY_VONG": {
+      "DEFAULT_WIN_RATE": 0.45,
+      "MIN_KELLY_RATIO": 0.05,
+      "RISK_PER_TRADE_MIN": 0.005,
+      "RISK_PER_TRADE_MAX": 0.02
+    },
+    "THAM_SO_QUAN_LY_LENH": {
+      "REWARD_RISK_RATIO": 2.0,
+      "R_R_MIN_FLOOR": 1.2,
+      "RETRACEMENT_PERCENTILE": 40,
+      "ATR_PERIOD": 14,
+      "ATR_SL_BASE_MULTIPLIER": 0.15,
+      "ATR_SL_RANGE_MULTIPLIER": 0.25,
+      "ATR_SL_HARD_FLOOR": 0.30,
+      "ATR_SL_HARD_CEIL": 0.80,
+      "SPREAD_SL_MULTIPLIER": 3.0
+    },
+    "THAM_SO_RUI_RO_HE_THONG": {
+      "MAX_SPREAD_RATIO": 1.5,
+      "MAX_DAILY_DRAWDOWN": 0.03,
+      "MAX_CONSECUTIVE_LOSSES": 4,
+      "STOP_BEFORE_NEWS_MINUTES": 15
+    }
+  }
+}

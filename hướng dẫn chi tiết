@@ -1,0 +1,86 @@
+# HƯỚNG DẪN CHI TIẾT THAY ĐỔI THAM SỐ CONFIG.JSON
+
+**Tác giả:** Chuyên gia PRMC-Adaptive V2.1  
+**Mục đích:** Giúp bạn hiểu rõ khi thay đổi một tham số thì sẽ ảnh hưởng gì và **nên thay đổi những tham số nào kèm theo** để bot chạy ổn định, tránh lỗi hoặc giảm hiệu suất.
+
+---
+
+## ⚠️ NGUYÊN TẮC QUAN TRỌNG
+
+- Không thay đổi **tùy tiện** một tham số đơn lẻ.
+- Khi thay đổi **TIMEFRAME** hoặc **PATTERN_LENGTH** → **phải điều chỉnh ít nhất 2-3 tham số khác**.
+- Sau khi thay đổi, nên **chạy test 1-2 ngày** trên tài khoản demo trước khi dùng thật.
+
+---
+
+## 1. Thay đổi TIMEFRAME (Quan trọng nhất)
+
+**Ảnh hưởng:**
+- Thay đổi tần suất chạy bot, độ nhạy tín hiệu, và chất lượng SL/TP.
+- Càng nhỏ timeframe (M5) → càng nhiều nhiễu, spread ảnh hưởng lớn.
+
+**Tham số cần thay đổi kèm theo:**
+
+| Tham số thay đổi              | Giá trị khuyến nghị cho từng TF          | Lý do |
+|-------------------------------|------------------------------------------|-------|
+| **PATTERN_LENGTH**            | H4: 5<br>H1: 5<br>M15: 6<br>M5: 8-10   | Khung nhỏ cần pattern dài hơn để đủ đặc trưng |
+| **ATR_SL_HARD_FLOOR**         | H4/H1: 0.30<br>M15: 0.35-0.40<br>M5: 0.45 | Tránh SL bị quét do spread |
+| **SIMILARITY_PERCENTILE**     | H4: 75<br>H1: 70<br>M15: 65<br>M5: 60  | Khung nhỏ khó khớp → nới lỏng |
+| **PROB_BASE_TRIGGER**         | H4: 0.70<br>H1: 0.65<br>M5: 0.60       | Scalping cần ngưỡng thấp hơn |
+| **REWARD_RISK_RATIO**         | M5: 2.5 (các khung khác: 2.0)           | Bù đắp rủi ro spread |
+
+**Ví dụ chuyển từ H1 sang M5:**
+```json
+"TIMEFRAME": "M5",
+"PATTERN_LENGTH": 8,
+"ATR_SL_HARD_FLOOR": 0.45,
+"SIMILARITY_PERCENTILE": 60,
+"PROB_BASE_TRIGGER": 0.60
+
+2. Thay đổi các nhóm tham số khác
+Nhóm THAM_SO_MATCHING
+
+Tăng SIMILARITY_PERCENTILE (ví dụ 70 → 80): Ít tín hiệu hơn nhưng chất lượng cao hơn.
+Giảm SIMILARITY_MIN_CLIP (0.60 → 0.55): Tăng số lượng mẫu khớp (dùng khi ít dữ liệu).
+
+Nhóm THAM_SO_XAC_SUAT
+
+Tăng PROB_BASE_TRIGGER: Tín hiệu ít nhưng chính xác hơn → nên tăng ENTROPY_MIN_DIFF.
+Tăng ENTROPY_MIN_DIFF: Lọc bỏ tín hiệu mơ hồ.
+
+Nhóm THAM_SO_VON_KY_VONG
+
+Giảm MIN_KELLY_RATIO (0.05 → 0.03): Bot ra nhiều tín hiệu hơn (rủi ro cao hơn).
+Tăng RISK_PER_TRADE_MAX (0.02 → 0.03): Tăng volume lệnh (chỉ nên làm khi win rate cao).
+
+Nhóm THAM_SO_QUAN_LY_LENH
+
+Tăng ATR_SL_HARD_FLOOR: SL rộng hơn → nên tăng REWARD_RISK_RATIO.
+Giảm RETRACEMENT_PERCENTILE (40 → 30): Entry hung hăng hơn (vào sớm).
+
+Nhóm THAM_SO_RUI_RO_HE_THONG
+
+Giảm MAX_DAILY_DRAWDOWN (0.03 → 0.02): Bảo vệ vốn chặt chẽ hơn.
+Giảm MAX_CONSECUTIVE_LOSSES (4 → 3): Nhanh chóng giảm risk khi thua.
+
+
+3. Bảng Profile Khuyến Nghị (Copy-Paste sẵn)
+JSON// Profile Cân bằng (H1) - Khuyến nghị bắt đầu
+{
+  "TIMEFRAME": "H1",
+  "PATTERN_LENGTH": 5,
+  "ATR_SL_HARD_FLOOR": 0.30,
+  "PROB_BASE_TRIGGER": 0.65,
+  "SIMILARITY_PERCENTILE": 70,
+  "REWARD_RISK_RATIO": 2.0
+}
+
+// Profile Scalping (M5)
+{
+  "TIMEFRAME": "M5",
+  "PATTERN_LENGTH": 8,
+  "ATR_SL_HARD_FLOOR": 0.45,
+  "PROB_BASE_TRIGGER": 0.60,
+  "SIMILARITY_PERCENTILE": 60,
+  "REWARD_RISK_RATIO": 2.5
+}
