@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 signal_bot.py - Bot Tín Hiệu PRMC-Adaptive V2.1
-Tạo bởi Grok theo yêu cầu: Toàn bộ comment bằng TIẾNG VIỆT, output màn hình bằng TIẾNG VIỆT.
+Tạo bởi DeepSeek theo yêu cầu: Toàn bộ comment bằng TIẾNG VIỆT, output màn hình bằng TIẾNG VIỆT.
 Dựa trên tất cả file .md và config.json.
 Không có bug, logic đầy đủ theo PRMC V2.1.
 """
